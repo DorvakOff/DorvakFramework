@@ -23,8 +23,8 @@ export default class BaseHtmlComponent extends HTMLElement {
 
     getCssFilesContent(): string[] {
         return [
-            `:host > * {min-width: 250px; max-width: 250px; margin: 10px;}`,
-            this.styles ? `:host > * {${this.styles}}` : ''
+            `.${this.id} {display: inline-block; > * {min-width: 250px; max-width: 250px; margin: 10px;}}`,
+            this.styles ? `.${this.id} > * {${this.styles}}` : ''
         ];
     }
 

@@ -4,7 +4,7 @@ export default class Html {
     static render(component: BaseHtmlComponent) {
         let target = component.shadowRoot;
         if (!target) return;
-        let template = component.template();
+        let template = `<div class="${component.id}">${component.template()}</div>`;
         let style = document.createElement('style');
         let css: string = component.getCssFilesContent().join(' ');
 

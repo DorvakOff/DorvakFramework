@@ -1,5 +1,5 @@
-import DvkButton from './framework/components/buttons/DvkButton';
-import DvkTextInput from "./framework/components/inputs/DvkTextInput";
+import DvkButton from './components/buttons/DvkButton';
+import DvkTextInput from "./components/inputs/DvkTextInput";
 
 const components = [
     DvkButton,
