@@ -7,14 +7,25 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <!-- Favicon -->
     <meta name="theme-color" content="#fff">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <script type="module" src="./src/index.ts"></script>
 </head>
 <body>
+<script>
+    const variants = ['primary', 'secondary', 'success', 'danger', 'warning'];
+</script>
 
-<dvk-button onclick="alert('Hello world')">Click me</dvk-button>
+<h1>Buttons</h1>
+<script>
+    variants.forEach(variant => {
+        document.write(`<dvk-button onclick="alert('Hello world')" color="${variant}">${variant} Simple button</dvk-button>`);
+        document.write(`<dvk-button onclick="alert('Hello world')" outline="true" color="${variant}">${variant} Outline button</dvk-button>`);
+        document.write('<br>');
+    });
+</script>
+
+<h1>Inputs</h1>
+<dvk-text-input placeholder="Enter your name" value="Matéo">Name</dvk-text-input>
+<dvk-text-input required placeholder="Enter your name">Name</dvk-text-input>
 
 </body>
 </html>

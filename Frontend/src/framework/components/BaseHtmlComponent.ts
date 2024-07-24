@@ -2,38 +2,30 @@ import Html from "../utils/Html";
 
 export default class BaseHtmlComponent extends HTMLElement {
 
-    attrs = ['id', 'className']
     id: any;
-    className: string;
-    ignoreChange: boolean = false;
-    static counter: number = 1;
+    styles: string = this.getAttribute('style') || '';
+    className: string = this.getAttribute('class') || '';
+
+    private static counter: number = 1;
+
+    getAttrs(): string[] {
+        return ['id', 'style', 'class'];
+    }
 
     constructor() {
         super();
-        this.className = "";
-        this.ignoreChange = true;
         this.attachShadow({mode: 'open'});
-        this.attrs.forEach(attr => {
-            if (!Object.getOwnPropertyDescriptor(this.constructor.prototype, attr)) {
-                Object.defineProperty(this.constructor.prototype, attr, {
-                    get() {
-                        return this.getAttribute(attr);
-                    },
-                    set(newValue) {
-                        this.setAttribute(attr, newValue);
-                    },
-                });
-            }
-        });
     }
 
     getObservedAttributes() {
-        return this.attrs;
+        return this.getAttrs();
     }
 
-    getCssFilesContent() {
-        let css: string[] = this.constructor.prototype.css || [];
-        return css.join(' ');
+    getCssFilesContent(): string[] {
+        return [
+            `:host > * {min-width: 250px; max-width: 250px; margin: 10px;}`,
+            this.styles ? `:host > * {${this.styles}}` : ''
+        ];
     }
 
     connectedCallback() {
@@ -42,19 +34,24 @@ export default class BaseHtmlComponent extends HTMLElement {
         this.render();
     }
 
-    attributesChangedCallback(name: string, oldValue: string, newValue: string) {
-        if (!this.ignoreChange) this.render();
-    }
-
     getTextContent() {
-        return this.textContent;
+        return (this.textContent || "").trim();
     }
 
     render() {
         let me = this;
+        let activeId = document.activeElement?.id || '';
+
         Html.render(me);
-        this.ignoreChange = false;
+
+        if (activeId === me.id) {
+            me.focus();
+        }
+
+        this.afterRender();
     }
+
+    afterRender() {}
 
     template() {
         return `<div>${this.constructor.prototype.selector} component works!</div>`;
@@ -62,7 +59,7 @@ export default class BaseHtmlComponent extends HTMLElement {
 
     getDetails() {
         let details = {};
-        this.attrs.forEach(attr => {
+        this.getAttrs().forEach(attr => {
             // @ts-ignore
             details[attr] = this[attr];
         });
@@ -81,12 +78,7 @@ export default class BaseHtmlComponent extends HTMLElement {
         });
     }
 
-    fireHandler(eventName: string, event: Event) {
-        let handler = "on" + eventName.charAt(0).toUpperCase() + eventName.substring(1);
-        // @ts-ignore
-        if (this[handler] && typeof this[handler] == "function") {
-            // @ts-ignore
-            this[handler](event);
-        }
+    focus() {
+        this.shadowRoot!.getElementById(this.id)!.focus();
     }
 }

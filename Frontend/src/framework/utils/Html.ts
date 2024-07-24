@@ -6,13 +6,17 @@ export default class Html {
         if (!target) return;
         let template = component.template();
         let style = document.createElement('style');
-        let css: string = component.getCssFilesContent();
+        let css: string = component.getCssFilesContent().join(' ');
 
         // Remove comments, tabs, multiple spaces, new lines and so on
         let regex = /(\r\n\t|\n|\r\t|\s\s+)/gm;
 
         while (regex.test(css)) {
             css = css.replace(regex, '');
+        }
+
+        while (regex.test(template)) {
+            template = template.replace(regex, '');
         }
 
         style.appendChild(document.createTextNode(css));
