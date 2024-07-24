@@ -21,7 +21,7 @@ export default class DvkButton extends ColouredHtmlComponent {
             classes.push('outline');
         }
         return `
-            <button class="${classes.join(' ')}">
+            <button class="${classes.join(' ')}" disabled="${this.disabled}">
                 ${this.getTextContent()}
             </button>
         `;
@@ -46,6 +46,12 @@ export default class DvkButton extends ColouredHtmlComponent {
                 border-radius: 5px;
                 box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
                 border: 2px solid var(--color);
+                
+                &[disabled="true"], &[disabled="true"]:hover {
+                    box-shadow: none;
+                    cursor: not-allowed;
+                    filter: brightness(0.8);
+                }
                 
                 &.outline {
                     background-color: transparent;

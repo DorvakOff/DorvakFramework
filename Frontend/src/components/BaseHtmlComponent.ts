@@ -5,11 +5,13 @@ export default class BaseHtmlComponent extends HTMLElement {
     id: any;
     styles: string = this.getAttribute('style') || '';
     className: string = this.getAttribute('class') || '';
+    disabled: boolean = this.hasAttribute('disabled');
 
+    protected touched: boolean = false;
     private static counter: number = 1;
 
     getAttrs(): string[] {
-        return ['id', 'style', 'class'];
+        return ['id', 'style', 'class', 'disabled'];
     }
 
     constructor() {
@@ -23,7 +25,13 @@ export default class BaseHtmlComponent extends HTMLElement {
 
     getCssFilesContent(): string[] {
         return [
-            `.${this.id} {display: inline-block; > * {min-width: 250px; max-width: 250px; margin: 10px;}}`,
+            `.${this.id} {
+                display: inline-block; 
+                > * {
+                    min-width: 250px;
+                    margin: 10px;
+                }
+            }`,
             this.styles ? `.${this.id} > * {${this.styles}}` : ''
         ];
     }
@@ -49,6 +57,7 @@ export default class BaseHtmlComponent extends HTMLElement {
         }
 
         this.afterRender();
+        this.touched = true;
     }
 
     afterRender() {}
@@ -79,6 +88,15 @@ export default class BaseHtmlComponent extends HTMLElement {
     }
 
     focus() {
-        this.shadowRoot!.getElementById(this.id)!.focus();
+        this.shadowRoot!.getElementById(this.id)?.focus();
+    }
+
+    fireHandler(eventName: string, event: Event) {
+        let handler = "on" + eventName;
+        let handlerFunction = this.getAttribute(handler);
+        if (handlerFunction) {
+            let func = new Function('event', handlerFunction);
+            func(event);
+        }
     }
 }

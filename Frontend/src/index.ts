@@ -1,9 +1,13 @@
 import DvkButton from './components/buttons/DvkButton';
 import DvkTextInput from "./components/inputs/DvkTextInput";
+import {DvkPasswordInput} from "./components/inputs/DvkPasswordInput";
+import {DvkDatePickerInput} from "./components/inputs/DvkDatePickerInput";
 
 const components = [
     DvkButton,
-    DvkTextInput
+    DvkTextInput,
+    DvkPasswordInput,
+    DvkDatePickerInput
 ];
 
 

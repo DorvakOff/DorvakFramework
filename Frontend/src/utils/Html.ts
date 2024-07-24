@@ -1,5 +1,7 @@
 import BaseHtmlComponent from "../components/BaseHtmlComponent";
 
+const fontAwesome = './fontawesome-6.5.2/css/all.min.css';
+
 export default class Html {
     static render(component: BaseHtmlComponent) {
         let target = component.shadowRoot;
@@ -19,8 +21,9 @@ export default class Html {
             template = template.replace(regex, '');
         }
 
+        target.innerHTML = '<link rel="stylesheet" href="' + fontAwesome + '">';
+        target.appendChild(document.createRange().createContextualFragment(template));
         style.appendChild(document.createTextNode(css));
-        target.innerHTML = template;
         target.appendChild(style);
     }
 }

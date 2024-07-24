@@ -34,7 +34,7 @@
     ]
   },
   "keywords": [],
-  "assetsPath": "assets",
+  "assetsPath": "src/assets",
   "dependencies": {
     "assets": "^3.0.1",
     "effector": "^22.8.8",

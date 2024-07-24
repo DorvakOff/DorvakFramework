@@ -7,6 +7,8 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <!-- Favicon -->
     <meta name="theme-color" content="#fff">
+    <script src="https://kit.fontawesome.com/3feddbdbde.js" crossorigin="anonymous"></script>
+    <script src="./src/assets/fontawesome-6.5.2/js/all.min.js" type="text/javascript"></script>
     <script type="module" src="./src/index.ts"></script>
 </head>
 <body>
@@ -15,10 +17,12 @@
 </script>
 
 <h1>Buttons</h1>
+<br>
 <script>
     variants.forEach(variant => {
         document.write(`<dvk-button onclick="alert('Hello world')" color="${variant}">${variant} Simple button</dvk-button>`);
         document.write(`<dvk-button onclick="alert('Hello world')" outline="true" color="${variant}">${variant} Outline button</dvk-button>`);
+        document.write(`<dvk-button onclick="alert('Hello world')" disabled color="${variant}">${variant} Disabled button</dvk-button>`);
         document.write('<br>');
     });
 </script>
@@ -26,6 +30,14 @@
 <h1>Inputs</h1>
 <dvk-text-input placeholder="Enter your name" value="Matéo">Name</dvk-text-input>
 <dvk-text-input required placeholder="Enter your name">Name</dvk-text-input>
+<dvk-text-input placeholder="Enter your name" icon="fa-regular fa-user" oniconclick="alert('Hello world')">With icon</dvk-text-input>
+<br>
+<dvk-text-input placeholder="Enter your name" disabled value="Matéo">Disabled</dvk-text-input>
+<dvk-text-input placeholder="Enter your name" disabled required>Disabled required</dvk-text-input>
+<dvk-text-input placeholder="Enter your name" disabled icon="fa-regular fa-user" oniconclick="alert('Hello world')">Disabled with icon</dvk-text-input>
+<br>
+<dvk-password-input placeholder="Enter your password">Password</dvk-password-input>
+<dvk-date-picker-input placeholder="Enter your date" value="2024-07-26">Date</dvk-date-picker-input>
 
 </body>
 </html>
