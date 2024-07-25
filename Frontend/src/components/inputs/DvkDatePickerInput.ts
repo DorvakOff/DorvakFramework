@@ -17,10 +17,6 @@ export class DvkDatePickerInput extends DvkTextInput {
     numberOfDaysInMonth: number = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
     today: Date = new Date();
 
-    constructor() {
-        super();
-    }
-
     afterRender() {
         super.afterRender();
         document.addEventListener('click', (e) => {
@@ -28,6 +24,14 @@ export class DvkDatePickerInput extends DvkTextInput {
                 this.popupOpen = false;
                 this.render();
             }
+        });
+
+        this.shadowRoot!.querySelector('.input')!.addEventListener('click', () => {
+            if (this.disabled) {
+                return;
+            }
+
+            this.onIconClick();
         });
 
         let calendarHeader = this.shadowRoot!.querySelector('.calendar-header');
@@ -141,6 +145,10 @@ export class DvkDatePickerInput extends DvkTextInput {
             `
                 .dvk-date-picker-input {
                     position: relative;
+                    
+                    &:hover, input:hover {
+                        cursor: pointer;
+                    }
                     
                     .calendar {
                         position: absolute;

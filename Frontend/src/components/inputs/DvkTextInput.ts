@@ -22,8 +22,7 @@ export default class DvkTextInput extends BaseHtmlComponent {
     value: string = this.getAttribute('value') || '';
     type: string = this.getAttribute('type') || 'text';
     icon: string = this.getAttribute('icon') || '';
-    readonly: boolean = this.hasAttribute('readonly');
-    additionalAttrs: Map<String, String> = new Map();
+    readonly: boolean = this.hasAttribute('readonly') || this.disabled;
 
     template(): string {
         let classes = [];
@@ -34,6 +33,15 @@ export default class DvkTextInput extends BaseHtmlComponent {
 
         if (this.disabled) {
             classes.push('disabled');
+        }
+
+        let additionalAttrs = new Map<string, string>();
+        if (this.readonly) {
+            additionalAttrs.set('readonly', 'true');
+        }
+
+        if (this.disabled) {
+            additionalAttrs.set('disabled', 'true');
         }
 
         return `
@@ -49,9 +57,7 @@ export default class DvkTextInput extends BaseHtmlComponent {
                         id="${this.id}-inputid" 
                         value="${this.value}"
                         required="${this.required}"
-                        ${this.readonly ? 'readonly' : ''}
-                        ${this.disabled ? 'disabled' : ''}
-                        ${this.additionalAttrs.size > 0 ? [...this.additionalAttrs].map(([key, value]) => `${key}="${value}"`).join(' ') : ''}
+                        ${additionalAttrs.size > 0 ? [...additionalAttrs].map(([key, value]) => `${key}="${value}"`).join(' ') : ''}
                     >
                     ${this.icon ? `<i class="${this.icon}"></i>` : ''}
                 </div>
