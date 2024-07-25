@@ -10,7 +10,7 @@ export class DvkComboBoxInput extends DvkTextInput {
     icon: string = "fa fa-chevron-down";
     readonly: boolean = true;
     options: { value: any, label: string }[] = JSON.parse(this.getAttribute('options') || '[]');
-    multiple: boolean = this.getAttribute('multiple') === 'true';
+    multiple: boolean = this.hasAttribute('multiple');
 
     popupOpen: boolean = false;
 
